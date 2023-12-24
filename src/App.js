@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import TextForm from "./components/TextForm";
 import { useState } from "react";
 import Alert from "./components/Alert";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AboutUs from "./components/AboutUs";
+import ContactUs from "./components/ContactUs";
 function App() {
   const [mode, setMode] = useState("dark");
   const toggleMode = () => {
@@ -31,15 +34,26 @@ function App() {
 
   return (
     <>
-      <Navbar title="Text Utils" mode={mode} toggleMode={toggleMode}></Navbar>
-      <Alert alert={alert} />
-      <div className="container my-3" mode={mode}>
-        <TextForm
-          heading="Enter your text to analyze"
-          showAlert={showAlert}
-          mode={mode}
-        />
-      </div>
+      <Router>
+        <Navbar title="Text Utils" mode={mode} toggleMode={toggleMode}></Navbar>
+        <Alert alert={alert} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="container my-3" mode={mode}>
+                <TextForm
+                  heading="Enter your text to analyze"
+                  showAlert={showAlert}
+                  mode={mode}
+                />
+              </div>
+            }
+          />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
+        </Routes>
+      </Router>
     </>
   );
 }
