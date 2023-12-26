@@ -25,6 +25,7 @@ export default function TextForm(prop) {
     let newText = document.getElementById("mybox");
     newText.select();
     navigator.clipboard.writeText(newText.value);
+    document.getSelection().removeAllRanges();
     prop.showAlert("text copied", "success");
   };
   const handlerOnchange = (event) => {
@@ -50,23 +51,37 @@ export default function TextForm(prop) {
             }}
           ></textarea>
         </div>
-        <button className="btn btn-primary" onClick={handlerOnclickUpper}>
+        <button
+          disabled={Text.length === 0}
+          className="btn btn-primary mx-2 my-1"
+          onClick={handlerOnclickUpper}
+        >
           change to uper case
         </button>
-        <button className="btn btn-primary mx-2" onClick={handlerOnclickLower}>
+        <button
+          disabled={Text.length === 0}
+          className="btn btn-primary mx-2 my-1"
+          onClick={handlerOnclickLower}
+        >
           change to lower case
         </button>
-        <button className="btn btn-primary mx-2" onClick={handlerOnclickClear}>
+        <button
+          disabled={Text.length === 0}
+          className="btn btn-primary mx-2 my-1"
+          onClick={handlerOnclickClear}
+        >
           Clear
         </button>
         <button
-          className="btn btn-primary mx-2"
+          disabled={Text.length === 0}
+          className="btn btn-primary mx-2 my-1"
           onClick={handlerOnclickRemoveExtraSpaces}
         >
           Remove Extra Spaces
         </button>
         <button
-          className="btn btn-primary mx-2"
+          disabled={Text.length === 0}
+          className="btn btn-primary mx-2 my-1"
           onClick={handlerOnclickCopyText}
         >
           Copy Text
@@ -78,7 +93,12 @@ export default function TextForm(prop) {
       >
         <h1>Your text summary</h1>
         <p>
-          {Text.split(" ").length} words, {Text.length} characters{" "}
+          {
+            Text.split(" ").filter((ele) => {
+              return ele.length !== 0;
+            }).length
+          }{" "}
+          words, {Text.length} characters{" "}
         </p>
         <h1>Preview</h1>
         <p>{Text}</p>
